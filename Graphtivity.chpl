@@ -13,6 +13,7 @@ module Graphtivity {
   }
 
   class Graph {
+    var name = "G";
     var vertices : list(owned Vertex);
     var edges : list(owned Edge?);
 
@@ -44,7 +45,7 @@ module Graphtivity {
     }
 
     proc toDot() {
-      writeln("digraph G {");
+      writeln("digraph ", this.name, " {");
       for v in vertices {
         writeln("  ", v.id, " [label=\"", v.msg, "\"];");
       }
@@ -57,7 +58,7 @@ module Graphtivity {
   }
 
   proc main() {
-    var graph = new Graph();
+    var graph = new Graph("G1");
     // once the graph goes out of scope, these vertices are dead!
     var nodeID1 = graph.addNode(1,"node1");
     var nodeID2 = graph.addNode(2,"node2");
