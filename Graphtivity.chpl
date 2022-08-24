@@ -15,6 +15,7 @@ module Graphtivity {
   class Graph {
     var name = "G";
     var vertices : list(owned Vertex);
+    // this is probably a bug, why do we need nilable here?
     var edges : list(owned Edge?);
 
     proc addNode(id:int, msg:string) : borrowed Vertex {
@@ -31,6 +32,7 @@ module Graphtivity {
     proc deleteEdge(from: Vertex, to: Vertex) {
       for e in edges {
         if e!.from == from && e!.to == to {
+          // prune the list we're iterating over?!?!?! yikes!
           edges.remove(e);
         }
       }
@@ -58,10 +60,15 @@ module Graphtivity {
   }
 
   proc main() {
+    /*
+    the main flaw I see with this implementation is that it requires us to
+    keep extra refs to the vertices. The vertices are owned/stored in the graph
+    and we keep references in the edges and here.
+    */
     var graph = new Graph("G1");
     // once the graph goes out of scope, these vertices are dead!
-    var nodeID1 = graph.addNode(1,"node1");
-    var nodeID2 = graph.addNode(2,"node2");
+    var nodeID1 = graph.addNode(1, "node1");
+    var nodeID2 = graph.addNode(2, "node2");
 
     graph.addEdge(nodeID1, nodeID2, "edge1");
     graph.addEdge(nodeID2, nodeID1, "edge2");
