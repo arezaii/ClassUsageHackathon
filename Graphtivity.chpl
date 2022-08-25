@@ -62,15 +62,15 @@ module Graphtivity {
 
     var nodeID1 = graph.addNode(1, "node1");
     var nodeID2 = graph.addNode(2, "node2");
-    var nodeID2 = graph.addNode(3, "node3");
+    var nodeID3 = graph.addNode(3, "node3");
 
 
     graph.addEdge(nodeID1, nodeID2, "edge1");
     graph.addEdge(nodeID2, nodeID1, "edge2");
     graph.toDot();
 
-    graph.deleteEdge(nodeID1, nodeID2);
-    graph.toDot();
+    // graph.deleteEdge(nodeID1, nodeID2);
+    // graph.toDot();
 
     nodeID1.msg = "node1 changed";
     graph.toDot();
